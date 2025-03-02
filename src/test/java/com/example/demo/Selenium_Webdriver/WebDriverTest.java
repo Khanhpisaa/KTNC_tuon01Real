@@ -14,22 +14,16 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class WebDriverTest {
-
     private WebDriver webDriver;
-
     @BeforeEach
     void setup() {
-
         WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
     }
-
     @Test
     void testSteps() throws InterruptedException {
-
         // open
         webDriver.get("https://anupdamoda.github.io/AceOnlineShoePortal/index.html");
-
         // click menu
         webDriver.findElement(By.xpath("//*[@id=\"menuToggle\"]/input")).click();
 
@@ -50,12 +44,6 @@ public class WebDriverTest {
         String actualFirstCategory = webElement.getText();
         String expectedFirstCategory = "Formal Shoes";
         Assertions.assertEquals(expectedFirstCategory, actualFirstCategory);
-
-        // ...
-
         webDriver.quit();
-
     }
-
-
 }
