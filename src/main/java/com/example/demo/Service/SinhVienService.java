@@ -4,10 +4,13 @@ import com.example.demo.Entity.SinhVien;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SinhVienService {
     private List<SinhVien> sinhVienList = new ArrayList<>();
+    private SinhVien sinhVien = new SinhVien();
 
+    // thêm
     public void addSinhVien(SinhVien sinhVien){
         if (sinhVien == null){
             throw new IllegalArgumentException("Sinh Vien Khong duoc de trong");
@@ -17,22 +20,15 @@ public class SinhVienService {
                 throw new IllegalArgumentException("khong duoc de trong");
         }
         if (sinhVien.getTuoi() > 70 || sinhVien.getTuoi() < 18){
-            throw new IllegalArgumentException("khong duoc de trong");
+            throw new IllegalArgumentException("Tuoi khong hop le");
         }
         if (sinhVien.getDiemTB() > 10 || sinhVien.getDiemTB() < 0){
-            throw new IllegalArgumentException("khong duoc de trong");
+            throw new IllegalArgumentException("Diem khon hop le");
         }
         sinhVienList.add(sinhVien);
     }
 
-    public SinhVien getSinhVienByMa(String maSV){
-        for (SinhVien sinhVien : sinhVienList){
-            if (sinhVien.getMaSV().equals(maSV)){
-                return sinhVien;
-            }
-        }
-        return null;
-    }
+    //sửa
     public boolean sua(SinhVien sinhVien, String maMoi, String tenMoi, int tuoiMoi, float diemTBMoi, String chuyenNganhMoi){
         if ( maMoi == null || maMoi.trim().isEmpty() || tenMoi == null || tenMoi.trim().isEmpty() || chuyenNganhMoi == null || chuyenNganhMoi.trim().isEmpty() ){
             throw new IllegalArgumentException("Khong duoc de trong");
@@ -50,15 +46,25 @@ public class SinhVienService {
         sinhVien.setChuyenNganh(chuyenNganhMoi);
         return true;
     }
-    public boolean deleteSinhVien( String maSV){
-        for (int i = 0; i < sinhVienList.size() ; ++i){
-            if (sinhVienList.get(i).getMaSV().equals(maSV) ){
-            sinhVienList.remove(i);
-            return true;
-            }
-        }
-    return false;
+
+    //xoa
+    public boolean xoaSinhVien(int tuoi){
+        return sinhVienList.removeIf(s -> s.getTuoi()==tuoi);
     }
+
+    // tim kiem
+    public Optional<SinhVien> timSinhVien(String maSV) {
+        return sinhVienList.stream()
+                .filter(s -> s.getMaSV().equals(maSV))
+                .findFirst();
+    }
+    public Optional<SinhVien> timSinhVienTuoi(int tuoi) {
+        return sinhVienList.stream()
+                .filter(s -> s.getTuoi() == tuoi)
+                .findFirst();
+    }
+
+
     public List<SinhVien> getAllSinhVien(){
         return new ArrayList<>(sinhVienList);
     }
