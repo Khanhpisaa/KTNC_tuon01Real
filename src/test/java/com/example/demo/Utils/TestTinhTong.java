@@ -19,7 +19,7 @@ public class TestTinhTong {
     @Test
     public void tong03(){
         int [] daySo = {1,2,3,4,5,6,7,3};
-        Assertions.assertEquals(30,tinhTongNNguyen.tinhTongNNguyen(daySo));
+        Assertions.assertEquals(31,tinhTongNNguyen.tinhTongNNguyen(daySo));
     }
     @Test
     public void tong04(){
