@@ -1,7 +1,6 @@
 package com.example.demo.Selenium_Webdriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,69 +14,36 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class WebDriverTest {
-    ChromeDriver chromeDriver;
-
+    private WebDriver webDriver;
     @BeforeEach
-    public void setUp() {
+    void setup() {
         WebDriverManager.chromedriver().setup();
-        chromeDriver = new ChromeDriver();
-        chromeDriver.manage().window().maximize();
+        webDriver = new ChromeDriver();
     }
-
     @Test
-    public void TestDangKy() throws InterruptedException{
-        chromeDriver.get("https://vitimex.com.vn/");
-        WebElement nutDangKy = chromeDriver.findElement(By.xpath("//div[@class='li_log']//a[@data-bs-toggle='modal']//*[name()='svg']"));
-        nutDangKy.click();
+    void testSteps() throws InterruptedException {
+        // open
+        webDriver.get("https://anupdamoda.github.io/AceOnlineShoePortal/index.html");
+        // click menu
+        webDriver.findElement(By.xpath("//*[@id=\"menuToggle\"]/input")).click();
+
+        // log in
         Thread.sleep(2000);
+        webDriver.findElement(By.xpath("//*[@id=\"menu\"]/a[2]/li")).click();
 
-        WebElement DangKyTaiKhoanMoi = chromeDriver.findElement(By.xpath("//a[contains(text(),'Đăng ký tài khoản mới')]"));
-        DangKyTaiKhoanMoi.click();
-        Thread.sleep(2000);
+        // input value into forms
+        webDriver.findElement(By.xpath("//*[@id=\"usr\"]")).sendKeys("sa");
+        webDriver.findElement(By.xpath("//*[@id=\"pwd\"]")).sendKeys("sa");
 
-        WebElement NhapHoTen = chromeDriver.findElement(By.xpath("//input[@id='name']"));
-        NhapHoTen.sendKeys("Hoàng Nam Khánh");
+        // submit form
+        webDriver.findElement(By.xpath("//*[@id=\"second_form\"]/input")).click();
 
-        WebElement  NhapSdt= chromeDriver.findElement(By.xpath("//input[@id='phone']"));
-        NhapSdt.sendKeys("0974521732");
+        // test
+        WebElement webElement = webDriver.findElement(By.xpath("//*[@id=\"ShoeType\"]"));
 
-        WebElement Nhapemail = chromeDriver.findElement(By.xpath("//input[@id='email']"));
-        Nhapemail.sendKeys("khanhhnph52275@gmail.com");
-
-        WebElement NhapMK = chromeDriver.findElement(By.xpath("//input[@id='pass-regis']"));
-        NhapMK.sendKeys("Khanh@2005");
-
-        WebElement NhapLaiMK = chromeDriver.findElement(By.xpath("//input[@id='pass-confirm']"));
-        NhapLaiMK.sendKeys("Khanh@2005");
-
-        WebElement nutDangKyMoi = chromeDriver.findElement(By.xpath("//a[@id='register-btn']"));
-        nutDangKyMoi.click();
-        Thread.sleep(4000);
-    }
-
-    @Test
-    public void TestDangNhap() throws InterruptedException {
-        chromeDriver.get("https://vitimex.com.vn/");
-        WebElement nutDangKy = chromeDriver.findElement(By.xpath("//div[@class='li_log']//a[@data-bs-toggle='modal']//*[name()='svg']"));
-        nutDangKy.click();
-        Thread.sleep(4000);
-
-        WebElement inputEmailHoacSDT = chromeDriver.findElement(By.xpath("//input[@id='account']"));
-        inputEmailHoacSDT.sendKeys("0974521732");
-
-        WebElement inputMatKhau = chromeDriver.findElement(By.xpath("//input[@id='pass']"));
-        inputMatKhau.sendKeys("Khanh@2005");
-
-        WebElement nutDangNhap = chromeDriver.findElement(By.xpath("//a[@id='signin-btn']"));
-        nutDangNhap.click();
-        Thread.sleep(4000);
-    }
-
-    @AfterEach
-    public void tearDown() throws InterruptedException {
-        if (chromeDriver != null) {
-            Thread.sleep(7000);
-            chromeDriver.quit();
-        }
+        String actualFirstCategory = webElement.getText();
+        String expectedFirstCategory = "Formal Shoes";
+        Assertions.assertEquals(expectedFirstCategory, actualFirstCategory);
+        webDriver.quit();
     }
 }
