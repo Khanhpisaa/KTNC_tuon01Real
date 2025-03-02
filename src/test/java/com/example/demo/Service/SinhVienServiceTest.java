@@ -163,6 +163,16 @@ class SinhVienServiceTest<svs> {
       assertEquals(18,kq.get().getTuoi());
    }
    @Test
+   public void TimkiemTuoiBienDuoi1(){
+      SinhVien sinhVien = new SinhVien("2","Khanh",18,9,"PTPM");
+      SinhVien sinhVien2 = new SinhVien("1","Khanh",18,9,"PTPM");
+      sinhVienService.addSinhVien(sinhVien);
+      sinhVienService.addSinhVien(sinhVien2);
+      Optional<SinhVien> kq = sinhVienService.timSinhVienTuoi(18);
+      assertTrue(kq.isPresent(),"khong tim thay tuoi phu hop");
+      assertEquals(18,kq.get().getTuoi());
+   }
+   @Test
    public void timKiemTuoiCanBienDuoi(){
       SinhVien sinhVien = new SinhVien("2","Khanh",19,9,"PTPM");
       SinhVien sinhVien2 = new SinhVien("1","Khanh",18,9,"PTPM");
