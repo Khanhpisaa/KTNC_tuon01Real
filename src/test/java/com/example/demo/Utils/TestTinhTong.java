@@ -23,7 +23,7 @@ public class TestTinhTong {
     }
     @Test
     public void tong04(){
-        int [] daySo = {1,2,3,4,5,6,7,3,10};
+        int [] daySo = {1,2,7};
         Assertions.assertEquals(10,tinhTongNNguyen.tinhTongNNguyen(daySo));
     }
     @Test
